@@ -20,7 +20,9 @@ const eigthBtn = document.querySelector(".eigth");
 const nineBtn = document.querySelector(".nine");
 const zeroBtn = document.querySelector(".zero");
 
-let calcArray = [];
+let a = null;
+let b = null;
+let calculate = null;
 
 function multiplyFoo(a, b) {
     return Number(a) * Number(b);
@@ -39,8 +41,11 @@ function divideFoo(a, b) {
 };
 
 acBtn.addEventListener("click", () => {
+    input.placeholder = 0;
     input.value = "";
-    calcArray = [];
+    a = null;
+    b = null;
+    calculate = null;
 });
 
 zeroBtn.addEventListener("click", () => {
@@ -89,50 +94,65 @@ pointBtn.addEventListener("click", () => {
 
 plmnBtn.addEventListener("click", () => {
     input.value = input.value * -1;
+    a = input.value;
 });
 
 sqrBtn.addEventListener("click", () => {
     input.value = Math.sqrt(input.value);
+    a = input.value;
 })
 
-let calculate = null;
-
 divideBtn.addEventListener("click", () => {
-    calcArray.push(input.value);
+    a = input.value;
     calculate = divideFoo;
+    input.placeholder = a;
     input.value = "";
 })
 
 multiplyBtn.addEventListener("click", () => {
-    calcArray.push(input.value);
+    a = input.value;
     calculate = multiplyFoo;
+    input.placeholder = a;
     input.value = "";
 })
 
 minusBtn.addEventListener("click", () => {
-    calcArray.push(input.value);
+   a = input.value;
     calculate = minusFoo;
+    input.placeholder = a;
     input.value = "";
 })
 
 plusBtn.addEventListener("click", () => {
-    calcArray.push(input.value);
+   a = input.value;
     calculate = addFoo;
+    input.placeholder = a;
     input.value = "";
 })
 
-equalBtn.addEventListener("click", () => {
-    calcArray.push(input.value);
-    input.value = calculate(calcArray[0], calcArray[1]);
-    calcArray = [];
+percentBtn.addEventListener("click", () => {
+    if (a && calculate) {
+    b = input.value;
+        input.value = (a / 100 * b);
+            input.placeholder = 0;
+    return
+}
+input.value = `ERR -> AC`
+a = null;
+b = null;
     calculate = null;
+        input.placeholder = 0;
+return
+});
+
+equalBtn.addEventListener("click", () => {
+    b = input.value;
+    input.value = calculate(a, b);
+    a = input.value;
+    b = null;
+    calculate = null;
+    input.placeholder = 0;
     return
 });
 
-percentBtn.addEventListener("click", () => {
-    calcArray.push(input.value);
-    input.value = calculate(calcArray[0], (calcArray[0] / 100 * calcArray[1]));
-    calcArray = [];
-    calculate = null;
-    return
-});
+console.log(input.placeholder);
